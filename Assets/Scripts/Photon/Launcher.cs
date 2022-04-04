@@ -40,12 +40,15 @@ public class Launcher : MonoBehaviourPunCallbacks
     private void Awake()
     {
         Instance = this;
+        
     }
 
     private void Start()
     {
         if (PhotonNetwork.IsConnected == false )
             PhotonNetwork.ConnectUsingSettings();
+
+        InputFieldMainMenu.text = MenuManager.Instance.GetPseudoInputField();
     }
 
     public override void OnConnectedToMaster()

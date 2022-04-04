@@ -32,6 +32,11 @@ public class PlayerManager : MonoBehaviour
         Debug.LogError(Coin);
     }
 
+    public int getCoin()
+    {
+        return Coin;
+    }
+
     public void createController()
     {
         // Ajout de la gestion du spawn lors de l'instantiate du playercontroller

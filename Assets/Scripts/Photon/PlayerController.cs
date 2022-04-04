@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System.Linq;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private Collision col;
     private SpriteRenderer sr;
     private Animator animator;
+
+    //[SerializeField] private TMP_Text coinText;
 
     [Header("PlayerStats")]
     [SerializeField] private int healthPoints;
@@ -103,10 +106,16 @@ public class PlayerController : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient) // Si master client on détruit la piece
         {
-            PhotonNetwork.Destroy(FindObjectsOfType<Coin>().Where(x => x.GetComponent<PhotonView>().ViewID == viewID).ToArray()[0].gameObject);
+            Coin[] coinsToDestroy = FindObjectsOfType<Coin>().Where(x => x.GetComponent<PhotonView>().ViewID == viewID).ToArray();
+            if (coinsToDestroy.Length > 0)
+            {
+                PhotonNetwork.Destroy(FindObjectsOfType<Coin>().Where(x => x.GetComponent<PhotonView>().ViewID == viewID).ToArray()[0].gameObject);
+            }
+
+            FindObjectsOfType<PlayerManager>().Where(x => x.getPV().IsMine).ToArray()[0].gotNewCoin();
         }
 
-        FindObjectsOfType<PlayerManager>().Where(x => x.getPV().IsMine).ToArray()[0].gotNewCoin();
+        //coinText.text = FindObjectsOfType<PlayerManager>().Where(x => x.getPV().IsMine).ToArray()[0].getCoin().ToString();
     }
 
     private void MoveUpDown()
