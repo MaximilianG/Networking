@@ -18,8 +18,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
     private Animator animator;
 
-    //[SerializeField] private TMP_Text coinText;
-
     [Header("PlayerStats")]
     [SerializeField] private int healthPoints;
 
@@ -104,18 +102,15 @@ public class PlayerController : MonoBehaviour
     [PunRPC]
     public void tookCoin(int viewID)
     {
-        if (PhotonNetwork.IsMasterClient) // Si master client on détruit la piece
+        if (PhotonNetwork.IsMasterClient)
         {
             Coin[] coinsToDestroy = FindObjectsOfType<Coin>().Where(x => x.GetComponent<PhotonView>().ViewID == viewID).ToArray();
             if (coinsToDestroy.Length > 0)
             {
-                PhotonNetwork.Destroy(FindObjectsOfType<Coin>().Where(x => x.GetComponent<PhotonView>().ViewID == viewID).ToArray()[0].gameObject);
+                PhotonNetwork.Destroy(coinsToDestroy[0].gameObject);
             }
-
             FindObjectsOfType<PlayerManager>().Where(x => x.getPV().IsMine).ToArray()[0].gotNewCoin();
         }
-
-        //coinText.text = FindObjectsOfType<PlayerManager>().Where(x => x.getPV().IsMine).ToArray()[0].getCoin().ToString();
     }
 
     private void MoveUpDown()

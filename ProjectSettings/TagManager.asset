@@ -8,6 +8,7 @@ TagManager:
   - Door
   - Ladder
   - CoinText
+  - CanvasCoin
   layers:
   - Default
   - TransparentFX

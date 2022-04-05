@@ -12,4 +12,5 @@ public class Coin : MonoBehaviour // On appel la fonction OnCoin du player contr
             collision.gameObject.GetComponentInParent<PlayerController>().OnCoin(gameObject.GetComponent<PhotonView>());
         }
     }
+
 }
